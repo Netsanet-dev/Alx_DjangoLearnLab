@@ -1,3 +1,3 @@
-bookUpdate = Book.objects.get(title='1984')
-bookUpdate.title = 'Nineteen Eighty-Four'
-bookUpdate.save()
+book = Book.objects.get(title='1984')
+book.title = 'Nineteen Eighty-Four'
+book.save()
