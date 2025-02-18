@@ -9,6 +9,7 @@ Book.objects.get(author=1)
 nooklibrary = Library.objects.create(name='Book nook')
 nooklibrary.save()
 
+n = Library.objects.get(name='Book nook')
+
 nook = Library.books.add(nooklibrary)
 nook.books.all()
-Library.objects.get(name='Book nook')
