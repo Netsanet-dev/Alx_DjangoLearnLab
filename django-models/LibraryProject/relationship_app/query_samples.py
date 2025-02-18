@@ -10,3 +10,5 @@ nooklibrary = Library.objects.create(name='Book nook')
 nooklibrary.save()
 
 nook = Library.books.add(nooklibrary)
+nook.books.all()
+Library.objects.get(name='Book nook')
