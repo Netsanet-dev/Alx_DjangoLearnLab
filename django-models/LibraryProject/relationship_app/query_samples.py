@@ -1,6 +1,6 @@
 from .models import Author, Book, Library, Librarian
 
-# harper = Author.objects.get(name='Harper Lee')
+
 # harper.save()
 # harperbook = Book.objects.create(title='To kill a Mockingbird', author=harper)
 # harperbook.save()
@@ -13,3 +13,5 @@ Library.objects.get(name=library_name)
 
 nook = Library.books.add(nooklibrary)
 nook.books.all()
+Author.objects.get(name=author_name)
+Book.objects.filter(author=author)
