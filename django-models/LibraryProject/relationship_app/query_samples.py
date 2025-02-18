@@ -6,10 +6,10 @@ from .models import Author, Book, Library, Librarian
 # harperbook.save()
 # Book.objects.get(author=1) 
 
-nooklibrary = Library.objects.create(name='Book nook')
-nooklibrary.save()
+# nooklibrary = Library.objects.create(name='Book nook')
+# nooklibrary.save()
 
-n = Library.objects.get(name='Book nook')
+Library.objects.get(name=library_name)
 
 nook = Library.books.add(nooklibrary)
 nook.books.all()
