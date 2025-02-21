@@ -6,10 +6,10 @@ from .models import Author, Book, Librarian, Library
 def books(request):
     books = Book.objects.all()
     context = {'book_list': books}
-    return render(request, 'books/book_list.html', context)
+    return render(request, 'book_list.html', context)
 
 class LibraryBooks(ListView):
     model = Library
     context_object_name = 'library'
-    template_name = 'books/library_detail.html'
+    template_name = 'library_detail.html'
     
