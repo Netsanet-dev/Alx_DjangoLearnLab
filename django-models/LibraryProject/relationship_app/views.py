@@ -6,7 +6,7 @@ from .models import Author, Book, Librarian, Library
 def books(request):
     books = Book.objects.all()
     context = {'book_list': books}
-    return render(request, 'book_list.html', context)
+    return render(request, 'list_books.html', context)
 
 class LibraryBooks(ListView):
     model = Library
