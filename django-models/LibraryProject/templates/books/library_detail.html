@@ -1,0 +1,22 @@
+<!-- library_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Library Detail</title>
+  </head>
+  <body>
+    {% for libra in library%}
+    <h1>Library: {{ libra.name }}</h1>
+    <h2>Books in Library:</h2>
+    <ul>
+      {% for book in libra.books.all %}
+      <li>
+        {{ book.title }} by {{ book.author.name }} (Published {{
+        book.publication_year }})
+      </li>
+      {% endfor %}
+    </ul>
+    {%endfor%}
+  </body>
+</html>

@@ -1,0 +1,12 @@
+body {
+  font-family: "Courier New", Courier, monospace;
+  display: flex;
+}
+
+ul {
+  font-size: 20px;
+}
+
+li {
+  margin-bottom: 4px;
+}
