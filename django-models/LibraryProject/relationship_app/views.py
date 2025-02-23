@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 def register(request):
     form = UserCreationForm()
     context = {'form', form}
-    return render(request, 'relationshipapp/register.html', context)
+    return render(request, 'relationship_app/register.html', context)
 
 
 @login_required
