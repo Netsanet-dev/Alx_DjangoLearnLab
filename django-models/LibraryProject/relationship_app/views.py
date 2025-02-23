@@ -23,8 +23,8 @@ def login_view(request):
 def logout_view(request):
     pass
 
-def regiser_view(request):
-    pass
+def register(request):
+    return render(request, 'relationshipapp/register.html')
 
 
 @login_required
