@@ -11,9 +11,13 @@ from django.contrib.auth.decorators import login_required
 
 
 def register(request):
-    form = UserCreationForm()
-    context = {'form': form}
-    return render(request, 'relationship_app/register.html', context)
+    if request.method == "post":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("/list_books")
+    return render(request, 'relationship_app/register.html', {"form": form})
 
 
 @login_required

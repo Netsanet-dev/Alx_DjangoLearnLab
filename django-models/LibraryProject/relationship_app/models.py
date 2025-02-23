@@ -4,8 +4,12 @@ from django.contrib.auth.models import User
 
 
 class UserProfile(models.Model):
+    ROLE_CHOICE = (
+    ("member", "Member"),
+    ("admin", "Admin")
+    )
     user  = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField()
+    role = models.CharField(max_length=50, choices=ROLE_CHOICE, default='Member')
 # Create your models here.
 class Author(models.Model):
     name = models.CharField(max_length=100)
