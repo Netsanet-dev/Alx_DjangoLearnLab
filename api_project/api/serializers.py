@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Player
+from .models import Book
 
-class PlayerSerializer(serializers.ModelSerializer):
+class BookSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Player
+        model = Book
         fields = '__all__'
