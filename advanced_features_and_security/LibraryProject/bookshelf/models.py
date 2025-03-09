@@ -3,11 +3,11 @@ from django.contrib.auth.models import AbstractUser,BaseUserManager
 
 # Create your models here.
 
-class User(AbstractUser):
+class CustomUser(AbstractUser):
     date_of_birth = models.DateField()
     profile_photo = models.ImageField()
 
-    
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **kwargs):

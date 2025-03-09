@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book, User
+from .models import Book, CustomUser
 from django.contrib.auth.admin import UserAdmin
 from .views import CustomUserCreationForm, CustomUserChangeForm
 
@@ -15,7 +15,7 @@ admin.site.register(Book, BookAdmin)
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    model = User
+    model = CustomUser
     ordering = ("email",)
     search_fields = ("email",)
     list_display = ("email", "is_staff", "is_active")
@@ -44,4 +44,4 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
-admin.site.register(User, CustomUserAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
