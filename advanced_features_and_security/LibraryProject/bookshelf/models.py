@@ -2,14 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser,BaseUserManager
 
 # Create your models here.
-
-class CustomUser(AbstractUser):
-    date_of_birth = models.DateField()
-    profile_photo = models.ImageField()
-
-
-
-class UserManager(BaseUserManager):
+class CustomUserManager(BaseUserManager):
     def create_user(self, email, password, **kwargs):
         if not email:
             raise ValueError("Email shoudn't be empty")
@@ -31,6 +24,12 @@ class UserManager(BaseUserManager):
         if kwargs.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
         return self.create_user(email, password, **kwargs)
+    
+class CustomUser(AbstractUser):
+    date_of_birth = models.DateField()
+    profile_photo = models.ImageField()
+    
+    objects = CustomUserManager()
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
