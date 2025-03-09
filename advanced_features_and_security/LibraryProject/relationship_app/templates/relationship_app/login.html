@@ -1,0 +1,23 @@
+<!-- login.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <h1 class="login">Login</h1>
+    <form method="post">
+      {% csrf_token %}
+      <label for="username">User name</label>
+      <input type="text" id="username" />
+      <label for="password">password</label>
+      <input type="password" id="password" />
+      {% comment %} {{ form.as_p }} {% endcomment %}
+      <button type="submit">Login</button>
+    </form>
+    <a href="{% url 'login' %}">Register</a>
+  </body>
+</html>

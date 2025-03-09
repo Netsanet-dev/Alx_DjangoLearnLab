@@ -1,0 +1,8 @@
+harper = Author.objects.get(name='Harper Lee')
+leo = Author.objects.get(name='Leo Tolstoy')
+jk = Author.objects.get(name='J.K Rowling')
+
+harperbook = Book.objects.get(title='To kill a Mockingbird')
+leobook = Book.objects.get(title='Anna Karenina')
+jkbook = Book.objects.get(title='Harry Potter series')
+
