@@ -1,39 +1,41 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, UserpassesText
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import Post
 from .forms import PostForm, RegisterForm
 from django.contrib.auth import login, logout
 from django.views.generic import DetailView, ListView, DeleteView, CreateView, UpdateView
 
 # Create your views here.
-class BlogListView(ListView):
+class BlogListView(UserPassesTestMixin, ListView):
     model = Post
     context_object_name = 'posts'
     template_name = 'blog/post_list.html'
 
-class BlogDetailView(DetailView):
+class BlogDetailView(UserPassesTestMixin, DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
 
-class BlogCreateView(CreateView):
+class BlogCreateView(UserPassesTestMixin, CreateView):
     model = Post
     fields = ['title', 'content']
     template_name = 'blog/post_create.html'
     success_url = reverse_lazy('home/')
 
-class BLogUpdateView(UpdateView):
+class BLogUpdateView(UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['title', 'content']
     template_name = 'blog/post_update.html'
     success_url = reverse_lazy('home/')
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(UserPassesTestMixin, DeleteView):
     model = Post
     template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('home/')
 
-
+@login_required(login_url='login/')
 def register(request):
     if request.method == "POST":
         form = request.POST
@@ -45,20 +47,24 @@ def register(request):
         form = RegisterForm()
     return render(request, 'blog/register.html', {"form": form})
 
+@login_required(login_url='login/')
 def home(request):
     posts  = Post.objects.all()
     return render(request, 'blog/home.html', {"posts": posts})
 
+@login_required(login_url='login/')
 def profile(request):
     return render(request, 'blog/profile.html')
 
 def log_in(request):
     return render(request, 'blog/login.html')
 
+@login_required(login_url='login/')
 def log_out(request):
     logout(request.user)
     return render(request, 'blog/logout.html')
 
+@login_required(login_url='login/')
 def create_post(request):
     if request.method == "POST":
         form = PostForm(request.POST)
