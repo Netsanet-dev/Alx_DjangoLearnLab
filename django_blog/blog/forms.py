@@ -1,5 +1,7 @@
 from django import forms
-from .models import Post, Comment
+from taggit.forms import TagField
+from taggit.models import Tag
+from .models import Post, Comment, Tag
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -11,9 +13,10 @@ class RegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 class PostForm(forms.ModelForm):
+    tags = TagField(required=False)
     class Meta:
         model = Post
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'tags']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
