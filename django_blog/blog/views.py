@@ -1,36 +1,36 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, UserpassesText
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from .models import Post
 from .forms import PostForm, RegisterForm
 from django.contrib.auth import login, logout
 from django.views.generic import DetailView, ListView, DeleteView, CreateView, UpdateView
 
 # Create your views here.
-class BlogListView(UserPassesTestMixin, ListView):
+class BlogListView(UserPassesTestMixin, LoginRequiredMixin, ListView):
     model = Post
     context_object_name = 'posts'
     template_name = 'blog/post_list.html'
 
-class BlogDetailView(UserPassesTestMixin, DetailView):
+class BlogDetailView(UserPassesTestMixin, LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
 
-class BlogCreateView(UserPassesTestMixin, CreateView):
+class BlogCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content']
     template_name = 'blog/post_create.html'
     success_url = reverse_lazy('home/')
 
-class BLogUpdateView(UserPassesTestMixin, UpdateView):
+class BLogUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Post
     fields = ['title', 'content']
     template_name = 'blog/post_update.html'
     success_url = reverse_lazy('home/')
 
-class BlogDeleteView(UserPassesTestMixin, DeleteView):
+class BlogDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('home/')
