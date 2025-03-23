@@ -24,7 +24,17 @@ def log_in(request):
     return render(request, 'registration/login.html')
 
 def log_out(request):
+    logout(request.user)
     return render(request, 'registration/logout.html')
 
 def create_post(request):
-    return render(request, 'blog/post.html')
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=True)
+            user.author = request.user
+            user.save()
+            return redirect('/home')
+    else:
+        form = PostForm()
+    return render(request, 'blog/post.html', {"form": form})
