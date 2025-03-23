@@ -91,15 +91,32 @@ def create_post(request):
         form = PostForm()
     return render(request, 'blog/post.html', {"form": form})
 
-def post_search(request):
-    query = request.GET.get('q')
-    results = []
-    if query:
-        results = Post.objects.filter(
-            Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__name__icontains=query)
-        ).distinct()
-    return render(request, 'search_results.html', {'results': results, 'query': query})
+class PostByTagListView(ListView):
+    template_name = 'search_results.html'
+    context_object_name = 'results'
 
-def posts_by_tag(request, tag_name):
-    posts = Post.objects.filter(tags__name=tag_name)
-    return render(request, 'tag_results.html', {'posts': posts, 'tag_name': tag_name})
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Post.objects.filter(
+                Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__name__icontains=query)
+            ).distinct()
+        return Post.objects.none()  # Return empty queryset if no query
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q')
+        return context
+
+class PostsByTagView(ListView):
+    template_name = 'tag_results.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag_name = self.kwargs['tag_name']
+        return Post.objects.filter(tags__name=tag_name)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag_name'] = self.kwargs['tag_name']
+        return context
