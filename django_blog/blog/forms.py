@@ -20,6 +20,11 @@ class PostForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['tags'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Enter tags (comma-separated)',
+            'style': 'width: 100%;',
+        })
 
     def save(self, commit=True, user=None):
         instance = super().save(commit=False)
