@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-from .models import Post, Comment
+from .models import Post, Comment, Tag
 from .forms import PostForm, RegisterForm
 from django.contrib.auth import login, logout
 from django.views.generic import DetailView, ListView, DeleteView, CreateView, UpdateView
-
+from django.db.models import Q
 # Create your views here.
 class BlogListView(UserPassesTestMixin, LoginRequiredMixin, ListView):
     model = Post
@@ -90,3 +90,4 @@ def create_post(request):
     else:
         form = PostForm()
     return render(request, 'blog/post.html', {"form": form})
+

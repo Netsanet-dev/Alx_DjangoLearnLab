@@ -1,6 +1,5 @@
 from django import forms
-from taggit.forms import TagField
-from taggit.models import Tag
+from taggit.forms import TagField, TagWidget
 from .models import Post, Comment, Tag
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -17,14 +16,10 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
+        widgets = {'tags': TagWidget}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['tags'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Enter tags (comma-separated)',
-            'style': 'width: 100%;',
-        })
 
     def save(self, commit=True, user=None):
         instance = super().save(commit=False)
@@ -32,6 +27,7 @@ class PostForm(forms.ModelForm):
             instance.author = user
         if commit:
             instance.save()
+            self.save_m2m()
         return instance
     
 class CommentForm(forms.ModelForm):
