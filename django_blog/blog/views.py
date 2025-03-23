@@ -91,3 +91,15 @@ def create_post(request):
         form = PostForm()
     return render(request, 'blog/post.html', {"form": form})
 
+def post_search(request):
+    query = request.GET.get('q')
+    results = []
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__name__icontains=query)
+        ).distinct()
+    return render(request, 'search_results.html', {'results': results, 'query': query})
+
+def posts_by_tag(request, tag_name):
+    posts = Post.objects.filter(tags__name=tag_name)
+    return render(request, 'tag_results.html', {'posts': posts, 'tag_name': tag_name})
