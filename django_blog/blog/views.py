@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from .models import Post
 from .forms import PostForm, RegisterForm
 from django.contrib.auth import login, logout
@@ -8,19 +9,29 @@ from django.views.generic import DetailView, ListView, DeleteView, CreateView, U
 class BlogListView(ListView):
     model = Post
     context_object_name = 'posts'
-    template_name = 'blog/home.html'
+    template_name = 'blog/post_list.html'
 
 class BlogDetailView(DetailView):
     model = Post
+    template_name = 'blog/post_detail.html'
+    context_object_name = 'post'
 
 class BlogCreateView(CreateView):
-    pass
+    model = Post
+    fields = ['title', 'content']
+    template_name = 'blog/post_create.html'
+    success_url = reverse_lazy('home/')
 
 class BLogUpdateView(UpdateView):
-    pass
+    model = Post
+    fields = ['title', 'content']
+    template_name = 'blog/post_update.html'
+    success_url = reverse_lazy('home/')
 
 class BlogDeleteView(DeleteView):
-    pass
+    model = Post
+    template_name = 'blog/post_delete.html'
+    success_url = reverse_lazy('home/')
 
 
 def register(request):
@@ -35,7 +46,8 @@ def register(request):
     return render(request, 'blog/register.html', {"form": form})
 
 def home(request):
-    return render(request, 'blog/home.html')
+    posts  = Post.objects.all()
+    return render(request, 'blog/home.html', {"posts": posts})
 
 def profile(request):
     return render(request, 'blog/profile.html')
@@ -51,9 +63,7 @@ def create_post(request):
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=True)
-            user.author = request.user
-            user.save()
+            form.save(user=request.user)
             return redirect('/home')
     else:
         form = PostForm()

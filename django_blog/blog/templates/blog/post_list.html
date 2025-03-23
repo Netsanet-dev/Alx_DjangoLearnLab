@@ -1,0 +1,12 @@
+{% extends "blog/base.html" %}
+{% block title %}Detail View{% endblock title %}
+{% block content %}
+<h1>List View</h1>
+    <ul>
+        {% for post in  posts%}
+        <h3>{{post.title}}</h3>
+        <p>{{post.id}}</p>
+            <li> {{post.content}}</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
