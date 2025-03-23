@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm, RegisterForm
 from django.contrib.auth import login, logout
 from django.views.generic import DetailView, ListView, DeleteView, CreateView, UpdateView
@@ -34,6 +34,22 @@ class BlogDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('home/')
+
+class CommentCreateView(CreateView):
+    model = Comment
+    template_name = 'blog/comment_create.html'
+    success_url = reverse_lazy('/home')
+
+class CommentUpdateView(UpdateView):
+    model = Comment
+    template_name = 'blog/comment_update.html'
+    success_url = reverse_lazy('/home')
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+    template_name = 'blog/comment_delete.html'
+    success_url = reverse_lazy('/home')
+
 
 @login_required(login_url='login/')
 def register(request):
